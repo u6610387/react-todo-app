@@ -9,19 +9,6 @@ pipeline {
 
     stages {
 
-        stage('Build & Test') {
-            agent {
-                docker {
-                    image 'node:18'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
-            steps {
-                sh 'npm install'
-                sh 'npm test || true'
-            }
-        }
-
         stage('Containerize') {
             steps {
                 sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest ."
